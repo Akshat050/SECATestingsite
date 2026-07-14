@@ -21,6 +21,8 @@ const plexMono = IBM_Plex_Mono({
   weight: ["400", "500"],
 });
 
+const siteBasePath = process.env.GITHUB_ACTIONS === "true" ? "/SECATestingsite" : "";
+
 export const metadata: Metadata = {
   title: "SECA — Statutory workflow for GST practice",
   description:
@@ -32,7 +34,7 @@ export const metadata: Metadata = {
     type: "website",
   },
   icons: {
-    icon: "/icon.svg",
+    icon: `${siteBasePath}/icon.svg`,
   },
 };
 
