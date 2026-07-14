@@ -1,26 +1,190 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/*
+  SECA art direction: the law report, set by a modernist.
+  Paper, ink, statute blue, stamp red, ledger green, amber, and hairlines are
+  the only color sources. No textures, no decorative color fades, no shadows.
+*/
+
+@custom-variant dark (&:is(.dark *));
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-card: var(--card);
+  --color-card-foreground: var(--ink);
+  --color-primary: var(--statute-blue);
+  --color-primary-foreground: var(--paper);
+  --color-secondary: var(--blue-tint);
+  --color-secondary-foreground: var(--blue-deep);
+  --color-muted: var(--hairline);
+  --color-muted-foreground: var(--muted);
+  --color-accent: var(--blue-tint);
+  --color-accent-foreground: var(--blue-deep);
+  --color-destructive: var(--stamp-red);
+  --color-border: var(--hairline);
+  --color-input: var(--hairline-strong);
+  --color-ring: var(--statute-blue);
+  --font-sans: var(--font-plex-sans);
+  --font-mono: var(--font-plex-mono);
+  --font-serif: var(--font-spectral);
+  --radius-sm: 5px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 14px;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+:root {
+  --paper: #f7f6f2;
+  --card: #ffffff;
+  --ink: #16181d;
+  --muted: #63625b;
+  --faint: #8b8a82;
+  --hairline: #e3e1d8;
+  --hairline-strong: #cfdcc2;
+  --statute-blue: #17497f;
+  --blue-tint: #e8eff7;
+  --blue-deep: #0f3560;
+  --stamp-red: #b3372f;
+  --red-tint: #f9ecea;
+  --ledger-green: #2f6b4f;
+  --green-tint: #eaf2ed;
+  --amber: #8a5a12;
+  --amber-tint: #f7efdf;
+  --background: var(--paper);
+  --foreground: var(--ink);
+  --radius: 8px;
+  --ease-seca: cubic-bezier(0.2, 0.6, 0.2, 1);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    background: var(--paper);
+  }
+
+  body {
+    min-width: 320px;
+    overflow-x: hidden;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-plex-sans), Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.65;
+    text-rendering: geometricPrecision;
+  }
+
+  h1,
+  h2,
+  h3 {
+    color: var(--ink);
+    font-family: var(--font-spectral), Georgia, serif;
+    font-weight: 600;
+    line-height: 1.15;
+    letter-spacing: 0;
+    text-wrap: balance;
+  }
+
+  a,
+  button,
+  input,
+  select,
+  textarea {
+    transition-duration: 120ms;
+    transition-timing-function: var(--ease-seca);
+  }
+
+  a:focus-visible,
+  button:focus-visible,
+  input:focus-visible,
+  select:focus-visible,
+  textarea:focus-visible {
+    outline: 2px solid var(--statute-blue);
+    outline-offset: 2px;
+  }
+
+  ::selection {
+    background: var(--blue-tint);
+    color: var(--blue-deep);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer utilities {
+  .container-seca {
+    width: min(100% - 48px, 1080px);
+    margin-inline: auto;
+  }
+
+  .font-tabular {
+    font-variant-numeric: tabular-nums;
+  }
+
+  .citation-chip {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 5px;
+    background: var(--blue-tint);
+    color: var(--blue-deep);
+    padding: 2px 6px;
+    font-family: var(--font-plex-mono), monospace;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.5;
+    white-space: nowrap;
+  }
+
+  .seca-button {
+    display: inline-flex;
+    min-height: 40px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    border: 1px solid var(--statute-blue);
+    padding: 8px 14px;
+    font-size: 14.5px;
+    font-weight: 500;
+    line-height: 1.2;
+  }
+
+  .seca-button-primary {
+    background: var(--statute-blue);
+    color: var(--paper);
+  }
+
+  .seca-button-primary:hover {
+    background: var(--blue-deep);
+  }
+
+  .seca-button-ghost {
+    background: transparent;
+    color: var(--statute-blue);
+  }
+
+  .seca-button-ghost:hover {
+    background: var(--blue-tint);
+  }
+}
+
+@media (max-width: 760px) {
+  .container-seca {
+    width: min(100% - 32px, 1080px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 1ms !important;
+  }
 }
